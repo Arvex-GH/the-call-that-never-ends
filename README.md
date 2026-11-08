@@ -1,5 +1,9 @@
 # The Call That Never Ends ☎️
 
+[![Made with pollinations.ai](https://raw.githubusercontent.com/pollinations/pollinations/main/packages/ui/src/brand/badge-made-with.svg)](https://pollinations.ai/?ref=badge)
+
+![The Call That Never Ends](docs/screenshot.png)
+
 **Two AI agents interview each other for a job. Neither one knows how to hang up.**
 
 An interactive generative-conversation app: an **Interviewer** and a **Candidate** hold a job
