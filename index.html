@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Call That Never Ends — two AIs interview each other</title>
+<meta name="description" content="Two Pollinations AI agents interview each other for a job. Neither one knows how to hang up. A generative conversation powered by Pollinations models with Bring Your Own Pollen." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%E2%98%8E%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+<style>
+  :root{
+    --bg:#0b0d12; --panel:#141824; --panel2:#1b2030; --line:#2a3145;
+    --txt:#e7ebf3; --dim:#9aa4bd; --accent:#7c6cff; --accent2:#31d0aa;
+    --host:#7c6cff; --guest:#31d0aa; --danger:#ff6b6b;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  a{color:var(--accent2)}
+  .wrap{max-width:900px;margin:0 auto;padding:22px 18px 60px}
+  header h1{font-size:clamp(22px,4vw,34px);margin:.1em 0 .15em;letter-spacing:-.02em}
+  header p{margin:.2em 0 1em;color:var(--dim);line-height:1.5}
+  .badge{display:inline-block;font-size:12px;color:var(--accent2);border:1px solid var(--line);
+    padding:3px 9px;border-radius:999px;margin-bottom:10px;background:var(--panel)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .row{display:flex;gap:12px;flex-wrap:wrap}
+  .row > *{flex:1 1 160px;min-width:140px}
+  label{display:block;font-size:12px;color:var(--dim);margin:0 0 4px}
+  input,select,textarea,button{font:inherit;color:var(--txt)}
+  input,select,textarea{width:100%;background:var(--panel2);border:1px solid var(--line);
+    border-radius:9px;padding:9px 11px;outline:none}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+  button{cursor:pointer;border-radius:10px;border:1px solid var(--line);
+    background:var(--panel2);padding:10px 16px;font-weight:600;transition:.15s}
+  button:hover{border-color:var(--accent)}
+  button.primary{background:linear-gradient(135deg,var(--accent),#5b46e0);border-color:transparent}
+  button.ghost{background:transparent}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .controls{margin:14px 0}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .status{font-size:13px;color:var(--dim);margin-top:10px;min-height:18px}
+  .status.warn{color:#ffd479}
+  .status.err{color:var(--danger)}
+  #stage{margin-top:20px;background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:16px;min-height:220px}
+  .turn{display:flex;gap:12px;margin:14px 0;align-items:flex-start;animation:in .25s ease}
+  @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .avatar{width:36px;height:36px;flex:0 0 36px;border-radius:50%;display:grid;place-items:center;
+    font-weight:800;font-size:14px;color:#0b0d12}
+  .bubble{background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+    padding:10px 13px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word;flex:1}
+  .who{font-size:12px;font-weight:700;margin-bottom:3px}
+  .host .avatar{background:var(--host)} .host .who{color:var(--host)}
+  .guest .avatar{background:var(--guest)} .guest .who{color:var(--guest)}
+  .guest{flex-direction:row-reverse}
+  .guest .bubble{background:#152a26;border-color:#234a41}
+  .demo-tag{font-size:11px;color:#ffd479;border:1px solid #5a4a1a;background:#2a2412;
+    border-radius:6px;padding:1px 6px;margin-left:6px}
+  .ring{display:inline-block;width:14px;height:14px;border:2px solid var(--dim);
+    border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;vertical-align:-2px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .foot{margin-top:26px;color:var(--dim);font-size:13px;line-height:1.6}
+  .foot code{background:var(--panel2);padding:1px 5px;border-radius:5px}
+  hr{border:none;border-top:1px solid var(--line);margin:20px 0}
+</style>
+</head>
+<body data-hermes-skip>
+<div class="wrap">
+  <header>
+    <div class="badge">Powered by Pollinations · Bring Your Own Pollen</div>
+    <h1>☎️ The Call That Never Ends</h1>
+    <p>Two AI agents — an <b>Interviewer</b> and a <b>Candidate</b> — hold a job interview.
+       Both keep politely trying to wrap it up. Neither one knows how to hang up.
+       Every line below is generated live by a Pollinations model.</p>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/@pollinations/ui@0.1.0-alpha.20/dist/connect.js"></script>
+    <polli-connect id="polli" app-key="pk_REPLACE_WITH_YOUR_APP_KEY" budget="5" expiry="7"></polli-connect>
+  </header>
+
+  <div class="panel controls">
+    <div class="row">
+      <div>
+        <label for="role">Job being interviewed for</label>
+        <input id="role" value="Senior Waffle Iron Operator" />
+      </div>
+      <div>
+        <label for="hostName">Interviewer name</label>
+        <input id="hostName" value="Dana" />
+      </div>
+      <div>
+        <label for="guestName">Candidate name</label>
+        <input id="guestName" value="Miles" />
+      </div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <div>
+        <label for="turns">Auto-run turns (each turn = 1 model call)</label>
+        <input id="turns" type="number" min="2" max="40" value="12" />
+      </div>
+      <div>
+        <label for="pace">Pace (seconds between turns)</label>
+        <input id="pace" type="number" min="0" max="10" step="0.5" value="1.5" />
+      </div>
+      <div>
+        <label for="vibe">Vibe</label>
+        <select id="vibe">
+          <option value="corporate">Painfully corporate</option>
+          <option value="awkward">Deeply awkward</option>
+          <option value="cheery">Relentlessly cheery</option>
+          <option value="noir">Hardboiled noir</option>
+        </select>
+      </div>
+    </div>
+    <div class="actions">
+      <button id="start" class="primary">▶ Start the call</button>
+      <button id="stop" class="ghost" disabled>■ Hang up</button>
+      <button id="clear" class="ghost">Clear</button>
+      <button id="demo" class="ghost">Try a canned demo</button>
+    </div>
+    <div id="status" class="status">Connect your Pollen above to run live, or try the canned demo.</div>
+  </div>
+
+  <div id="stage" aria-live="polite"></div>
+
+  <hr />
+  <div class="foot">
+    <b>How it works.</b> Each turn sends the running transcript to
+    <code>gen.pollinations.ai/v1/chat/completions</code> and asks the next agent to reply.
+    They are prompted to keep trying to end the interview — and to always find one more thing to add.
+    The conversation only stops when you press <b>Hang up</b> or hit the turn limit.
+    <br><br>
+    Built on <a href="https://pollinations.ai" target="_blank" rel="noopener">Pollinations</a> models.
+    Sign-in and spending use <a href="https://github.com/pollinations/pollinations/blob/main/BRING_YOUR_OWN_POLLEN.md" target="_blank" rel="noopener">Bring Your Own Pollen</a> —
+    you pay for your own generations, this app never sees your balance.
+  </div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+  const API = "https://gen.pollinations.ai/v1/chat/completions";
+  const MODEL = "openai";
+
+  const connectEl = document.getElementById('polli');
+  const statusEl  = document.getElementById('status');
+  const stage     = document.getElementById('stage');
+  const startBtn  = document.getElementById('start');
+  const stopBtn   = document.getElementById('stop');
+  const clearBtn  = document.getElementById('clear');
+  const demoBtn   = document.getElementById('demo');
+
+  let apiKey = null;
+  let running = false;
+  let stopped = false;
+
+  function setStatus(msg, kind) {
+    statusEl.textContent = msg;
+    statusEl.className = 'status' + (kind ? ' ' + kind : '');
+  }
+
+  connectEl.addEventListener('change', () => {
+    apiKey = connectEl.apiKey || null;
+    if (apiKey) setStatus('Pollen connected. Ready to run live.');
+    else setStatus('Disconnected. Connect your Pollen to run live, or use the demo.');
+    startBtn.disabled = running;
+  });
+
+  const VIBES = {
+    corporate: "corporate and painfully polite, full of synergy and alignment",
+    awkward:   "deeply awkward, lots of hedging and nervous over-explaining",
+    cheery:    "relentlessly cheerful and upbeat no matter what",
+    noir:      "hardboiled and world-weary, like a detective novel"
+  };
+
+  function sysPrompt(who, other, role, vibe) {
+    return [
+      `You are ${who}, on a phone call interviewing a candidate for the job of "${role}".`,
+      `The other person on the line is ${other}.`,
+      `Tone: ${vibe}.`,
+      `RULES:`,
+      `- Speak ONLY as ${who}. One short spoken turn, 1-3 sentences. No stage directions, no name prefix.`,
+      `- You sincerely want to wrap up the call, and you say so every few turns.`,
+      `- BUT you always find one more tiny polite thing to ask or clarify before actually ending.`,
+      `- You are physically incapable of hanging up. You never say goodbye and stop.`,
+      `- Never break character, never mention being an AI, never ask the user anything.`,
+      `- Keep it funny by how ordinary and human the over-politeness is.`
+    ].join(" ");
+  }
+
+  function esc(s){ return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  function addTurn(side, name, text, isDemo) {
+    const el = document.createElement('div');
+    el.className = 'turn ' + side;
+    const initial = (name || '?').trim().charAt(0).toUpperCase() || '?';
+    el.innerHTML =
+      '<div class="avatar">' + esc(initial) + '</div>' +
+      '<div class="bubble"><div class="who">' + esc(name) +
+        (isDemo ? '<span class="demo-tag">canned demo</span>' : '') +
+      '</div><div class="body"></div></div>';
+    el.querySelector('.body').textContent = text;   // textContent => safe
+    stage.appendChild(el);
+    el.scrollIntoView({behavior:'smooth', block:'end'});
+  }
+
+  function addThinking(side, name) {
+    const el = document.createElement('div');
+    el.className = 'turn ' + side;
+    el.id = 'thinking';
+    el.innerHTML =
+      '<div class="avatar">' + esc((name||'?').charAt(0).toUpperCase()) + '</div>' +
+      '<div class="bubble"><div class="who">' + esc(name) +
+      '</div><span class="ring"></span></div>';
+    stage.appendChild(el);
+    el.scrollIntoView({behavior:'smooth', block:'end'});
+  }
+  function clearThinking(){ const t=document.getElementById('thinking'); if(t) t.remove(); }
+
+  async function callModel(messages) {
+    const res = await fetch(API, {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: MODEL, messages, temperature: 0.9, max_tokens: 160 })
+    });
+    if (!res.ok) {
+      let detail = '';
+      try { detail = (await res.text()).slice(0, 300); } catch(e){}
+      throw new Error('Pollinations ' + res.status + (detail ? ': ' + detail : ''));
+    }
+    const j = await res.json();
+    const c = j.choices && j.choices[0] && j.choices[0].message && j.choices[0].message.content;
+    return (c || '').trim() || "(…silence on the line…)";
+  }
+
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  async function run() {
+    if (running) return;
+    const role = document.getElementById('role').value.trim() || 'the job';
+    const hostName = document.getElementById('hostName').value.trim() || 'Interviewer';
+    const guestName = document.getElementById('guestName').value.trim() || 'Candidate';
+    const vibe = VIBES[document.getElementById('vibe').value] || VIBES.corporate;
+    const turns = Math.max(2, Math.min(40, parseInt(document.getElementById('turns').value,10) || 12));
+    const pace = Math.max(0, Math.min(10, parseFloat(document.getElementById('pace').value))) * 1000;
+
+    if (!apiKey) { setStatus('Connect your Pollen first — or press “Try a canned demo”.', 'warn'); return; }
+
+    running = true; stopped = false;
+    startBtn.disabled = true; stopBtn.disabled = false;
+    setStatus('Call in progress — every line is a live Pollinations generation…');
+
+    let transcript = [];                 // [{who,text}]
+    let speaker = 'host';                // host speaks first
+
+    try {
+      for (let i = 0; i < turns && !stopped; i++) {
+        const isHost = speaker === 'host';
+        const name = isHost ? hostName : guestName;
+        const other = isHost ? guestName : hostName;
+        const side = isHost ? 'host' : 'guest';
+
+        const messages = [
+          { role: 'system', content: sysPrompt(name, other, role, vibe) },
+          { role: 'user', content: transcript.length
+              ? "Here is the call so far:\n" + transcript.map(t => t.who + ": " + t.text).join("\n") +
+                "\n\nNow it is your turn, " + name + ". Keep trying to end the call, but add one more thing."
+              : "The call has just connected and you both said hello. It is your turn, " + name + "." }
+        ];
+
+        addThinking(side, name);
+        const reply = await callModel(messages);
+        clearThinking();
+        addTurn(side, name, reply, false);
+        transcript.push({ who: name, text: reply });
+        speaker = isHost ? 'guest' : 'host';
+
+        if (i < turns - 1 && !stopped && pace > 0) await sleep(pace);
+      }
+      if (!stopped) setStatus('Turn limit reached — they would have kept going forever. Press ▶ to continue.');
+    } catch (err) {
+      clearThinking();
+      setStatus('Generation failed: ' + err.message, 'err');
+    } finally {
+      running = false;
+      startBtn.disabled = false; stopBtn.disabled = true;
+    }
+  }
+
+  startBtn.addEventListener('click', run);
+  stopBtn.addEventListener('click', () => { stopped = true; setStatus('You hung up. They were mid-sentence.'); });
+  clearBtn.addEventListener('click', () => { if (running) return; stage.innerHTML = ''; setStatus('Cleared.'); });
+
+  demoBtn.addEventListener('click', () => {
+    if (running) return;
+    const hostName = document.getElementById('hostName').value.trim() || 'Dana';
+    const guestName = document.getElementById('guestName').value.trim() || 'Miles';
+    const role = document.getElementById('role').value.trim() || 'the job';
+    const demo = [
+      ['host',  hostName,  `Thanks so much for hopping on, ${guestName}. So — we're interviewing for ${role}. I think we've covered everything. I'll let you go.`],
+      ['guest', guestName, `Of course, thank you so much for your time, ${hostName}. I'll let you get back to it. I guess I'll just— sorry, one tiny thing?`],
+      ['host',  hostName,  `Oh, absolutely, no trouble at all. Go ahead. I do want to be mindful of your time.`],
+      ['guest', guestName, `It's no trouble. I just wanted to make sure — when you said “waffle iron,” you meant the industrial kind, not the small one on the counter?`],
+      ['host',  hostName,  `That's a great question. Really good clarifying instinct. I think we can call it there — I'll follow up. You've been extremely generous with your time.`],
+      ['guest', guestName, `Likewise, genuinely. I'll get out of your hair now. Although — quick one — is the follow-up by email, or should I expect a call?`]
+    ];
+    demo.forEach((t, i) => setTimeout(() => addTurn(t[0], t[1], t[2], true), i * 120));
+    setStatus('Showing a canned example (no Pollen spent). Connect your Pollen and press ▶ for a live, never-ending call.', 'warn');
+  });
+
+  setStatus('Connect your Pollen above to run live, or try the canned demo.');
+})();
+</script>
+</body>
+</html>
