@@ -28,7 +28,7 @@ Inspired by the viral "two AI agents in a job interview and neither one knows ho
 The page drops in the official no-build connect button:
 ```html
 <script defer src="https://cdn.jsdelivr.net/npm/@pollinations/ui@0.1.0-alpha.20/dist/connect.js"></script>
-<polli-connect id="polli" app-key="pk_REPLACE_WITH_YOUR_APP_KEY" budget="5" expiry="7"></polli-connect>
+<polli-connect id="polli" app-key="pk_s1EsSRKZyEcyNeBs" budget="5" expiry="7"></polli-connect>
 ```
 `connectEl.apiKey` is the visitor's own scoped `sk_...` key, used as the Bearer token. Users pay
 for their own generations; the app never sees a balance and stores no secret key.
